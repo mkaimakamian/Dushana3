@@ -1,0 +1,84 @@
+﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="Estilo/MyStyle.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+	<form runat="server">
+	<div class="page">
+		<div class="header">
+			<div class="title">
+				<h1>
+					Dushana
+				</h1>
+			</div>
+			<div class="loginDisplay">
+			</div>
+			<div class="clear hideSkiplink">
+				<asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+					IncludeStyleBlock="false" Orientation="Horizontal">
+					<Items>
+						<asp:MenuItem NavigateUrl="~/AboutUs.aspx" Text="Empresa" />
+						
+                        <asp:MenuItem Text="Cliente" >
+                            <asp:MenuItem NavigateUrl="~/Orders.aspx" Text="Carrito" />
+                            <asp:MenuItem NavigateUrl="~/MyOrders.aspx" Text="Mis Compras" />            
+                        </asp:MenuItem>  
+						
+                        <asp:MenuItem Text="Productos">
+							<asp:MenuItem NavigateUrl="~/ProductList.aspx" Text="Lista de Productos" />
+                            <asp:MenuItem NavigateUrl="~/CustomizationOrder.aspx" Text="Customizaciones" />
+						</asp:MenuItem>
+						
+                        <asp:MenuItem NavigateUrl="~/ClientRegistration.aspx" Text="Registrarse" />
+
+                        <asp:MenuItem Text="Administracion">
+						    <asp:MenuItem Text="Administracion del Sistema">
+							    <asp:MenuItem Text="Permisos" >
+							        <asp:MenuItem NavigateUrl="~/FamilyAndPatent.aspx" Text="Registro y Asignacion de Patentes y Familias" />
+                                    <asp:MenuItem NavigateUrl="~/Client.aspx" Text="Alta de Clientes" />
+                                    <asp:MenuItem NavigateUrl="~/User.aspx" Text="Alta de Usuarios" />
+                                    <asp:MenuItem NavigateUrl="~/UserPermission.aspx" Text="Permisos de Usuarios" />
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="Seguridad de Datos" >
+                                    <asp:MenuItem NavigateUrl="~/Backup.aspx" Text="Copia de Seguridad" />
+                                    <asp:MenuItem NavigateUrl="~/Restore.aspx" Text="Restauracion" />
+                                </asp:MenuItem>
+						        <asp:MenuItem Text="Actividades realizadas del sistema" >
+                                     <asp:MenuItem NavigateUrl="ViewerLog.aspx" Text="Bitacora" />
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Administracion de Ventas">
+                                <asp:MenuItem NavigateUrl="~/SalesInformation.aspx" Text="Informacion de Venta" />
+                                <asp:MenuItem NavigateUrl="~/ProductInformation.aspx" Text="Informacion de Productos" />
+                                <asp:MenuItem NavigateUrl="~/Product.aspx" Text="Alta de Clientes" />
+                            </asp:MenuItem>
+                            <asp:MenuItem Text ="Adminsitracion de Informacion">
+                                <asp:MenuItem NavigateUrl="~/News.aspx" Text="Noticias" />
+                            </asp:MenuItem>
+
+                        </asp:MenuItem>
+
+					</Items>
+				</asp:Menu>
+			</div>
+		</div>
+		<div class="main">
+			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+		</div>
+		<div class="clear">
+		</div>
+	</div>
+	<div class="footer">
+	</div>
+	</form>
+</body>
+</html>
