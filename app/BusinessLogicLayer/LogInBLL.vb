@@ -3,52 +3,48 @@ Imports DataTypeObject
 Imports Helper
 Public Class LogInBLL
 
-    Public Function LogIn(ByRef user As String, ByRef password As String) As ErrorDTO
-        Dim result As ErrorDTO
+    ' Se encarga de realizar el logueo del usuario
+    Public Function LogIn(ByRef user As String, ByRef password As String) As ResultDTO
+        Dim result As ResultDTO
 
+        ' El proceso de logueo se basa en el cumplimiento de las reglas de negocio únicamente.
         result = IsValid(user, password)
 
-        If result.IsValid Then
-            ' Se reinician los reintentos porque se loguea adecuadamente
-            ' COMPLETAR
-
-        Else
-            If result.IsCurrentError(ErrorDTO.type.INVALIDA_CREDENTIAL) Then
-                ' Si el error es de credencial, entonces hay que incrementar la cantidad de reintentos
-                ' COMPLETAR
-            End If
-        End If
-
-        ' Debería devolverse una estructura que devuelva el frontend como, por ejemplo, un array (o un ErrorDTO, como en este momento)
+        ' TODO: Debería devolverse una estructura que el frontend interprete (XML?)... por ahora ErrorDTO
         Return result
     End Function
 
-    ' Comprueba que las condiciones de logueo se cumplan
-    Private Function IsValid(ByRef user As String, ByRef password As String) As ErrorDTO
+    ' Valida el cumplimiento de los inputrs y de las reglas de negocio
+    Private Function IsValid(ByRef user As String, ByRef password As String) As ResultDTO
         Dim securityHelper As New SecurityHelper()
         Dim logInDto As New LogInDTO()
         Dim logInDal As New LogInDAL()
-        Dim result As UserDTO
+        Dim userDto As UserDTO
 
-        ' 1. Datos en blanco
+        ' 1. Chequeo de inputs
         If Len(user) = 0 Or Len(password) = 0 Then
-            Return New ErrorDTO(ErrorDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.", True)
+            Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.", False)
         End If
 
-        ' 2. Credenciales válidas
+        ' 2. Chequeo de existencia de usuario
         logInDto.user = user
         logInDto.password = securityHelper.Encrypt(password)
-        result = logInDal.LogIn(logInDto)
+        userDto = logInDal.LogIn(logInDto)
 
-        If result Is Nothing Then
-            Return New ErrorDTO(ErrorDTO.type.INVALIDA_CREDENTIAL, "Credenciales inválidas.", True)
+        If userDto Is Nothing Then
+            ' Si no se pudo recuperar el usuario porque el password falló, entonces se incrementan los riententos.
+            ' En caso de que no exista el nombre del usuario, el incremento no tiene efecto alguno.
+            logInDal.IncrementRetries(logInDto)
+            Return New ResultDTO(ResultDTO.type.INVALIDA_CREDENTIAL, "Credenciales inválidas.", False)
         Else
-            ' 3. Usuario habilitado
-            If result.locked Then
-                Return New ErrorDTO(ErrorDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.", True)
+            ' 3. Chequeo de usuario lockeado
+            If userDto.locked Then
+                Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.", False)
+            Else
+                logInDal.ResetRetries(logInDto)
+                userDto.retries = 0
+                Return New ResultDTO(ResultDTO.type.OK, "Ok", True, userDto)
             End If
         End If
-
-        Return New ErrorDTO(ErrorDTO.type.OK, "Ok", True)
     End Function
 End Class

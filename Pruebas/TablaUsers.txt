@@ -1,0 +1,45 @@
+﻿USE [LPPA]
+GO
+
+/****** Object:  Table [dbo].[users]    Script Date: 26/11/2016 17:25:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[users](
+	[name] [varchar](50) NOT NULL,
+	[password] [varchar](50) NOT NULL,
+	[locked] [bit] NOT NULL,
+	[retries] [int] NOT NULL,
+	[vdigit] [varchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
+USE [LPPA]
+GO
+
+INSERT INTO [dbo].[users]
+           ([name]
+           ,[password]
+           ,[locked]
+           ,[retries]
+           ,[vdigit])
+     VALUES
+           ("Admin"
+           ,"e3afed0047b08059d0fada10f400c1e5"
+           ,0
+           ,0
+           ,"A completar"
+GO
+

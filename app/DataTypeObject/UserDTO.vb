@@ -1,15 +1,17 @@
 ﻿Public Class UserDTO
-    ' Modelado del log in
-    Private _user As String
+    ' Modelado del usuario
+
+    ' No se incluye el password para evitar que siempre se transporte y se exponga.
+    Private _name As String
     Private _locked As Boolean
     Private _retries As Integer
 
-    Property user As String
+    Property name As String
         Get
-            Return _user
+            Return _name
         End Get
         Set(value As String)
-            _user = value
+            _name = value
         End Set
     End Property
 
@@ -22,11 +24,11 @@
         End Set
     End Property
 
-    Property retries As String
+    Property retries As Integer
         Get
             Return _retries
         End Get
-        Set(value As String)
+        Set(value As Integer)
             _retries = value
         End Set
     End Property
