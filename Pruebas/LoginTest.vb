@@ -1,9 +1,19 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports BusinessLogicLayer
+Imports DataAccessLayer
 Imports DataTypeObject
 
 <TestClass()> Public Class LoginTest
+
+    ' Se ejecuta siempre antes de cada método... y pone a 0 los datos del logueo
+    <TestInitialize()> Public Sub Inicializar()
+        Dim dal As New LogInDAL()
+        Dim login As New LogInDTO()
+        login.user = "Admin"
+        dal.UnlockUser(login)
+    End Sub
+
 
     <TestMethod()> Public Sub LoginOk()
 
@@ -34,7 +44,7 @@ Imports DataTypeObject
 
     <TestMethod()> Public Sub LoginLocked()
 
-        ' Prueba que no logue el usuario admin
+        ' Prueba el locked
         Dim login As New LogInBLL
         Dim result As ResultDTO
         login.LogIn("Admin", "xxxx")
@@ -46,5 +56,21 @@ Imports DataTypeObject
         ' Usuario Lockeado
         result = login.LogIn("Admin", "xxxx")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.MAX_ATTEMPTS))
+    End Sub
+
+    <TestMethod()> Public Sub LoginRetries()
+
+        ' Prueba el locked
+        Dim login As New LogInBLL
+        Dim result As ResultDTO
+        login.LogIn("Admin", "xxxx")
+
+        ' Usuario debería poder continuar reintentando
+        result = login.LogIn("Admin", "xxxx")
+        Assert.IsTrue(result.IsCurrentError(ResultDTO.type.INVALID_CREDENTIAL))
+
+        ' Usuario Lockeado
+        result = login.LogIn("Admin", "Admin")
+        Assert.IsTrue(result.IsCurrentError(ResultDTO.type.OK))
     End Sub
 End Class

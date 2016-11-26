@@ -121,6 +121,10 @@
       <Project>{babf9f11-3091-4aac-982e-413228bfc1f8}</Project>
       <Name>BusinessLogicLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\app\DataAccessLayer\DataAccessLayer.vbproj">
+      <Project>{130b57b8-631a-4b0c-8134-9bcdbcca580c}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\app\DataTypeObject\DataTypeObject.vbproj">
       <Project>{11777f6d-1405-40e2-b717-4882ae252c84}</Project>
       <Name>DataTypeObject</Name>

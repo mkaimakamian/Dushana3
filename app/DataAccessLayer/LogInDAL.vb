@@ -51,12 +51,21 @@ Public Class LogInDAL
         dbsql.ExecuteNonQuery(sql)
     End Sub
 
-    ' Incrementa en uno los reintentos de logueo
+    ' Lockea al usuario
     Public Sub LockUser(ByRef userLogin As LogInDTO)
         Dim dbsql As New DBSql
         Dim sql As String
 
         sql = "UPDATE users SET locked = 1 WHERE name = '" + userLogin.user + "'"
+        dbsql.ExecuteNonQuery(sql)
+    End Sub
+
+    ' Deslockea al usuario y resetea los retries
+    Public Sub UnlockUser(ByRef userLogin As LogInDTO)
+        Dim dbsql As New DBSql
+        Dim sql As String
+
+        sql = "UPDATE users SET locked = 0, retries = 0 WHERE name = '" + userLogin.user + "'"
         dbsql.ExecuteNonQuery(sql)
     End Sub
 
