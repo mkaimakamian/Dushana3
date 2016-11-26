@@ -2,6 +2,7 @@
 Imports DataTypeObject
 Imports Helper
 Public Class LogInBLL
+    Const MAX_RETRIES = 3
 
     ' Se encarga de realizar el logueo del usuario
     Public Function LogIn(ByRef user As String, ByRef password As String) As ResultDTO
@@ -31,11 +32,23 @@ Public Class LogInBLL
         logInDto.password = securityHelper.Encrypt(password)
         userDto = logInDal.LogIn(logInDto)
 
-        If userDto Is Nothing Then
-            ' Si no se pudo recuperar el usuario porque el password falló, entonces se incrementan los riententos.
-            ' En caso de que no exista el nombre del usuario, el incremento no tiene efecto alguno.
-            logInDal.IncrementRetries(logInDto)
-            Return New ResultDTO(ResultDTO.type.INVALIDA_CREDENTIAL, "Credenciales inválidas.", False)
+        ' No se encontró el usuario para la combinación name + password... pero aún así puede existir el username y deben incrementarse los reintentos.
+        If IsNothing(userDto) Then
+            ' Se busca el usuario pero sin usar el password
+            userDto = logInDal.GetUser(logInDto)
+
+            'Si existe, entonces se debe incrementar los reintentos y eventualmente lockearlo si los excedió
+            If Not IsNothing(userDto) Then
+                logInDal.IncrementRetries(logInDto)
+                userDto.retries += 1
+
+                If userDto.retries = MAX_RETRIES Then
+                    logInDal.LockUser(logInDto)
+                    Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "Credenciales inválidas: el usuario ha excedido la cantidad de reintentos.", False)
+                End If
+            End If
+
+            Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.", False)
         Else
             ' 3. Chequeo de usuario lockeado
             If userDto.locked Then

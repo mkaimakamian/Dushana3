@@ -1,8 +1,7 @@
 ﻿Public Class ResultDTO
     Enum type
         OK
-        LOCKED
-        INVALIDA_CREDENTIAL
+        INVALID_CREDENTIAL
         CHECKSUM_ERROR
         MAX_ATTEMPTS
         INCOMPLETE_FIELDS
