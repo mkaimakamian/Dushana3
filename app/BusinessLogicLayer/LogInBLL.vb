@@ -7,12 +7,16 @@ Public Class LogInBLL
     ' Se encarga de realizar el logueo del usuario
     Public Function LogIn(ByRef user As String, ByRef password As String) As ResultDTO
         Dim result As ResultDTO
+        Try
+            ' El proceso de logueo se basa en el cumplimiento de las reglas de negocio únicamente.
+            result = IsValid(user, password)
 
-        ' El proceso de logueo se basa en el cumplimiento de las reglas de negocio únicamente.
-        result = IsValid(user, password)
+            ' TODO: Debería devolverse una estructura que el frontend interprete (XML?)... por ahora ErrorDTO
+            Return result
+        Catch ex As Exception
+            Return New ResultDTO(ResultDTO.type.EXCEPTION, "Se ha producido un error crítico: " + ex.Message)
+        End Try
 
-        ' TODO: Debería devolverse una estructura que el frontend interprete (XML?)... por ahora ErrorDTO
-        Return result
     End Function
 
     ' Valida el cumplimiento de los inputrs y de las reglas de negocio
@@ -24,13 +28,13 @@ Public Class LogInBLL
 
         ' 1. Chequeo de inputs
         If Len(user) = 0 Or Len(password) = 0 Then
-            Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.", False)
-        End If
+                Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.")
+            End If
 
-        ' 2. Chequeo de existencia de usuario
-        logInDto.user = user
-        logInDto.password = securityHelper.Encrypt(password)
-        userDto = logInDal.LogIn(logInDto)
+            ' 2. Chequeo de existencia de usuario
+            logInDto.user = user
+            logInDto.password = securityHelper.Encrypt(password)
+            userDto = logInDal.LogIn(logInDto)
 
         ' No se encontró el usuario para la combinación name + password... pero aún así puede existir el username y deben incrementarse los reintentos.
         If IsNothing(userDto) Then
@@ -44,19 +48,19 @@ Public Class LogInBLL
 
                 If userDto.retries = MAX_RETRIES Then
                     logInDal.LockUser(logInDto)
-                    Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "Credenciales inválidas: el usuario ha excedido la cantidad de reintentos.", False)
+                    Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "Credenciales inválidas: el usuario ha excedido la cantidad de reintentos.")
                 End If
             End If
 
-            Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.", False)
+            Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
         Else
             ' 3. Chequeo de usuario lockeado
             If userDto.locked Then
-                Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.", False)
+                Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.")
             Else
                 logInDal.ResetRetries(logInDto)
                 userDto.retries = 0
-                Return New ResultDTO(ResultDTO.type.OK, "Ok", True, userDto)
+                Return New ResultDTO(ResultDTO.type.OK, "Ok", userDto, True)
             End If
         End If
     End Function

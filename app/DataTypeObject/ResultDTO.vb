@@ -5,6 +5,7 @@
         CHECKSUM_ERROR
         MAX_ATTEMPTS
         INCOMPLETE_FIELDS
+        EXCEPTION
     End Enum
 
     Private _type As type
@@ -12,13 +13,13 @@
     Private _keepGoing As Boolean
     Private _value As Object
 
-    Public Sub New(ByRef type As type, descripton As String, keepGoing As Boolean)
+    Public Sub New(ByRef type As type, descripton As String, Optional keepGoing As Boolean = False)
         _type = type
         _description = descripton
         _keepGoing = keepGoing
     End Sub
 
-    Public Sub New(ByRef type As type, descripton As String, keepGoing As Boolean, value As Object)
+    Public Sub New(ByRef type As type, descripton As String, value As Object, Optional keepGoing As Boolean = False)
         _type = type
         _description = descripton
         _keepGoing = keepGoing
