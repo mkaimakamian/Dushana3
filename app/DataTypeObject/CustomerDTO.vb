@@ -1,4 +1,5 @@
 ﻿Public Class CustomerDTO
+    'Modela el cliente
 
     Private _id As Integer
     Private _name As String
@@ -13,7 +14,6 @@
         _birth = birth
         _gender = gender
     End Sub
-
 
     Property id As Integer
         Set(value As Integer)

@@ -1,7 +1,7 @@
 ﻿Imports DataTypeObject
 Public Class CustomerDAL
 
-    Public Function GetCustomers()
+    Public Function GetCustomers() As List(Of CustomerDTO)
         Return ListOfCustomers()
     End Function
 

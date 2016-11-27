@@ -18,7 +18,7 @@ Imports DataTypeObject
         Dim result As ResultDTO
         Dim customersBll As New CustomerBLL()
         result = customersBll.GetCustomer(1)
-        Assert.AreEqual(CType(result.value, CustomerDTO).name, "Alberto", "El usuario debería llamarse Alberto")
+        Assert.AreEqual(CType(result.value, CustomerDTO).name, "Alberto", "El cliente debería llamarse Alberto")
     End Sub
 
     <TestMethod()> Public Sub GetInexistentCustomer()

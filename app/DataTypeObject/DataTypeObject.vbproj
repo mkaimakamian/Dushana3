@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CustomerDTO.vb" />
     <Compile Include="LogDTO.vb" />
+    <Compile Include="ProductDTO.vb" />
     <Compile Include="ResultDTO.vb" />
     <Compile Include="LogInDTO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
