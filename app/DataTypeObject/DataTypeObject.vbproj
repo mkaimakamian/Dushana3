@@ -62,8 +62,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILoggeable.vb" />
-    <Compile Include="LogCriteria.vb" />
     <Compile Include="LogDTO.vb" />
     <Compile Include="ResultDTO.vb" />
     <Compile Include="LogInDTO.vb" />

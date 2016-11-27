@@ -25,14 +25,17 @@ Public Class LogInBLL
         Dim logInDto As New LogInDTO()
         Dim logInDal As New LogInDAL()
         Dim userDto As UserDTO
+        Dim logBll As New LogBLL()
 
         ' 1. Chequeo de inputs
         If Len(user) = 0 Or Len(password) = 0 Then
-                Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.")
-            End If
+            'logBll.LogInfo()
 
-            ' 2. Chequeo de existencia de usuario
-            logInDto.user = user
+            Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.")
+        End If
+
+        ' 2. Chequeo de existencia de usuario
+        logInDto.user = user
             logInDto.password = securityHelper.Encrypt(password)
             userDto = logInDal.LogIn(logInDto)
 
