@@ -5,11 +5,13 @@ Public Class CustomerBLL
     Public Function GetCustomers() As ResultDTO
         Dim customerDal As New CustomerDAL()
         Dim logBll As New LogBLL()
-
-        Dim result As New ResultDTO(ResultDTO.type.OK, "Ok", customerDal.GetCustomers(), True)
-        logBll.AddLogInfo("Get customers", "Listado de clientes", Me)
-
-        Return result
+        Try
+            Dim result As New ResultDTO(ResultDTO.type.OK, "Ok", customerDal.GetCustomers(), True)
+            logBll.AddLogInfo("Get customers", "Listado de clientes", Me)
+            Return result
+        Catch ex As Exception
+            Return New ResultDTO(ResultDTO.type.EXCEPTION, "Se ha producido un error crítico: " + ex.Message)
+        End Try
     End Function
 
     Public Function GetCustomer(ByRef id As Integer) As ResultDTO
