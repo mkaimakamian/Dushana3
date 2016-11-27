@@ -62,6 +62,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerDTO.vb" />
     <Compile Include="LogDTO.vb" />
     <Compile Include="ResultDTO.vb" />
     <Compile Include="LogInDTO.vb" />

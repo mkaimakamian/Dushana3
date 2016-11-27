@@ -62,6 +62,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerDAL.vb" />
     <Compile Include="DBSql.vb" />
     <Compile Include="LogDAL.vb" />
     <Compile Include="LogInDAL.vb" />
