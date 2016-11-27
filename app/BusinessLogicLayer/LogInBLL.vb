@@ -29,8 +29,7 @@ Public Class LogInBLL
 
         ' 1. Chequeo de inputs
         If Len(user) = 0 Or Len(password) = 0 Then
-            'logBll.LogInfo()
-
+            logBll.AddLogWarn("LogIn", "Campos incompletos.", Me)
             Return New ResultDTO(ResultDTO.type.INCOMPLETE_FIELDS, "Campos incompletos.")
         End If
 
@@ -51,18 +50,25 @@ Public Class LogInBLL
 
                 If userDto.retries = MAX_RETRIES Then
                     logInDal.LockUser(logInDto)
+                    logBll.AddLogWarn("LogIn", "El usuario " + logInDto.user + " alcanzó los reintentos permitidos.", Me)
                     Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "Credenciales inválidas: el usuario ha excedido la cantidad de reintentos.")
+                Else
+                    logBll.AddLogWarn("LogIn", "Se intentó acceder con el usuario " + logInDto.user + ". Reintentos: " + Cstr(userDto.retries), Me)
+                    Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
                 End If
+            Else
+                logBll.AddLogWarn("LogIn", "Se intentó acceder con el usuario inexistente " + logInDto.user, Me)
+                Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
             End If
-
-            Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
         Else
             ' 3. Chequeo de usuario lockeado
             If userDto.locked Then
+                logBll.AddLogWarn("LogIn", "El usuario ha excedido la cantidad de reintentos.", Me)
                 Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.")
             Else
                 logInDal.ResetRetries(logInDto)
                 userDto.retries = 0
+                logBll.AddLogInfo("LogIn", "El usuaro " + userDto.name + " se ha logueado exitosamente.", Me)
                 Return New ResultDTO(ResultDTO.type.OK, "Ok", userDto, True)
             End If
         End If
