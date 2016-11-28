@@ -7,7 +7,10 @@ Public Class LogInDAL
         Dim dbsql As New DBSql
         Dim sql As String
         Dim reader As List(Of List(Of String))
-        sql = "SELECT * FROM users WHERE name = '" + userLogin.user + "' AND password = '" + userLogin.password + "'"
+
+        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password) then 1 ELSE 0 END verified FROM users "
+        sql += "WHERE name = '" + userLogin.user + "' AND password = '" + userLogin.password + "'"
+
         reader = dbsql.ExecuteReader(sql)
 
         If reader.Count > 0 Then
@@ -22,7 +25,9 @@ Public Class LogInDAL
         Dim dbsql As New DBSql
         Dim sql As String
         Dim reader As List(Of List(Of String))
-        sql = "SELECT * FROM users WHERE name = '" + userLogin.user + "'"
+
+        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password) then 1 ELSE 0 END verified FROM users "
+        sql += "WHERE name = '" + userLogin.user + "'"
         reader = dbsql.ExecuteReader(sql)
 
         If reader.Count > 0 Then
@@ -72,8 +77,9 @@ Public Class LogInDAL
     Private Function Resolve(ByRef item As List(Of String)) As UserDTO
         Dim result As New UserDTO
         result.name = CStr(item.Item(0))
-        result.locked = CBool(item.Item(2))
-        result.retries = CInt(item.Item(3))
+        result.locked = CBool(item.Item(1))
+        result.retries = CInt(item.Item(2))
+        result.verified = CBool(item.Item(3))
         Return result
     End Function
 End Class

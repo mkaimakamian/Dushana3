@@ -11,7 +11,6 @@ Public Class LogInBLL
             ' El proceso de logueo se basa en el cumplimiento de las reglas de negocio únicamente.
             result = IsValid(user, password)
 
-            ' TODO: Debería devolverse una estructura que el frontend interprete (XML?)... por ahora ErrorDTO
             Return result
         Catch ex As Exception
             Return New ResultDTO(ResultDTO.type.EXCEPTION, "Se ha producido un error crítico: " + ex.Message)
@@ -19,7 +18,7 @@ Public Class LogInBLL
 
     End Function
 
-    ' Valida el cumplimiento de los inputrs y de las reglas de negocio
+    ' Valida el cumplimiento de los inputs y de las reglas de negocio
     Private Function IsValid(ByRef user As String, ByRef password As String) As ResultDTO
         Dim securityHelper As New SecurityHelper()
         Dim logInDto As New LogInDTO()
@@ -35,10 +34,11 @@ Public Class LogInBLL
 
         ' 2. Chequeo de existencia de usuario
         logInDto.user = user
-            logInDto.password = securityHelper.Encrypt(password)
-            userDto = logInDal.LogIn(logInDto)
+        logInDto.password = securityHelper.Encrypt(password)
+        userDto = logInDal.LogIn(logInDto)
 
-        ' No se encontró el usuario para la combinación name + password... pero aún así puede existir el username y deben incrementarse los reintentos.
+        ' No se encontró el usuario para la combinación name + password... pero aún así puede existir el username y 
+        ' deben incrementarse los reintentos.
         If IsNothing(userDto) Then
             ' Se busca el usuario pero sin usar el password
             userDto = logInDal.GetUser(logInDto)
@@ -53,7 +53,7 @@ Public Class LogInBLL
                     logBll.AddLogWarn("LogIn", "El usuario " + logInDto.user + " alcanzó los reintentos permitidos.", Me)
                     Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "Credenciales inválidas: el usuario ha excedido la cantidad de reintentos.")
                 Else
-                    logBll.AddLogWarn("LogIn", "Se intentó acceder con el usuario " + logInDto.user + ". Reintentos: " + Cstr(userDto.retries), Me)
+                    logBll.AddLogWarn("LogIn", "Se intentó acceder con el usuario " + logInDto.user + ". Reintentos: " + CStr(userDto.retries), Me)
                     Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
                 End If
             Else
@@ -61,7 +61,13 @@ Public Class LogInBLL
                 Return New ResultDTO(ResultDTO.type.INVALID_CREDENTIAL, "Credenciales inválidas.")
             End If
         Else
-            ' 3. Chequeo de usuario lockeado
+            ' 3. Chequeo de inconsistencia
+            If Not userDto.verified Then
+                logBll.AddLogCritical("LogIn", "Inconsistencia en los datos del usuario " + userDto.name + ".", Me)
+                Return New ResultDTO(ResultDTO.type.CHECKSUM_ERROR, "El registro se encuentra corrupto.")
+            End If
+
+            ' 4. Chequeo de usuario lockeado
             If userDto.locked Then
                 logBll.AddLogWarn("LogIn", "El usuario ha excedido la cantidad de reintentos.", Me)
                 Return New ResultDTO(ResultDTO.type.MAX_ATTEMPTS, "El usuario ha excedido la cantidad de reintentos.")

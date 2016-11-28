@@ -5,6 +5,7 @@
     Private _name As String
     Private _locked As Boolean
     Private _retries As Integer
+    Private _verified As Boolean
 
     Property name As String
         Get
@@ -15,11 +16,11 @@
         End Set
     End Property
 
-    Property locked As String
+    Property locked As Boolean
         Get
             Return _locked
         End Get
-        Set(value As String)
+        Set(value As Boolean)
             _locked = value
         End Set
     End Property
@@ -30,6 +31,15 @@
         End Get
         Set(value As Integer)
             _retries = value
+        End Set
+    End Property
+
+    Property verified As Boolean
+        Get
+            Return _verified
+        End Get
+        Set(value As Boolean)
+            _verified = value
         End Set
     End Property
 End Class

@@ -8,6 +8,7 @@ Public Class CheckDataBaseBLL
         Dim CheckDBDAL As New CheckDBDAL
         Dim OriginDVV As dvvDTO
         Dim CalculatedDVV As dvvDTO
+
         Try
             'Devuelvo el DVV calculado
             OriginDVV = CheckDBDAL.getDVV
@@ -22,9 +23,8 @@ Public Class CheckDataBaseBLL
                 logBll.AddLogCritical("Check DVV", "El DVV fue Corrupto, realizar Restore.", Me)
                 Return New ResultDTO(ResultDTO.type.CORRUPTED_DATABASE, "Error en el DVV, DB Corrupta")
             End If
-        Catch
-
-            Return Nothing
+        Catch ex As Exception
+            Return New ResultDTO(ResultDTO.type.EXCEPTION, "Se ha producido un error crítico: " + ex.Message)
         End Try
     End Function
 
