@@ -4,5 +4,25 @@
 </asp:Content>
 <asp:Content ID="MainBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>Bitacora</h1>
+    <p>Filtros: </p>
+    <p>Nivel
+        <asp:DropDownList ID="CmbLevel" runat="server">
+            <asp:ListItem Value="4">Info</asp:ListItem>
+            <asp:ListItem Value="3">Critico</asp:ListItem>
+            <asp:ListItem Value="2">Aviso</asp:ListItem>
+            <asp:ListItem Value="1">Debug</asp:ListItem>
+        </asp:DropDownList>
+&nbsp;&nbsp;&nbsp; </p>
+    <p>Desde<asp:Calendar ID="SinceCalendar" runat="server"></asp:Calendar>
+    </p>
+    <p>Hasta<asp:Calendar ID="UntilCalendar" runat="server"></asp:Calendar>
+    </p>
+    <p>
+        <asp:Button ID="BtnAccept" runat="server" Text="Listar" />
+    </p>
+    <p>
+        <asp:GridView ID="LogGridView" runat="server">
+        </asp:GridView>
+    </p>
 </asp:Content>
 
