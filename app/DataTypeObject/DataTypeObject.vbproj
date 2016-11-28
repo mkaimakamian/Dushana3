@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerDTO.vb" />
+    <Compile Include="dvhDTO.vb" />
+    <Compile Include="dvvDTO.vb" />
     <Compile Include="LogDTO.vb" />
     <Compile Include="ProductDTO.vb" />
     <Compile Include="ResultDTO.vb" />

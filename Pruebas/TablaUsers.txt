@@ -11,12 +11,13 @@ GO
 SET ANSI_PADDING ON
 GO
 
+-- Seba: Se modifica a hdigit (Este es el horizontal :P) y este se modifica a INT
 CREATE TABLE [dbo].[users](
 	[name] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
 	[locked] [bit] NOT NULL,
 	[retries] [int] NOT NULL,
-	[vdigit] [varchar](50) NOT NULL,
+	[hdigit] [int] NOT NULL,
  CONSTRAINT [PK_users] PRIMARY KEY CLUSTERED 
 (
 	[name] ASC
@@ -35,17 +36,17 @@ GO
 USE [LPPA]
 GO
 
+-- Seba: Se modifica a Comillas Simples
 INSERT INTO [dbo].[users]
            ([name]
            ,[password]
            ,[locked]
            ,[retries]
-           ,[vdigit])
+           ,[hdigit]) -- Seba: Se modifica a hdigit (Este es el horizontal :P)
      VALUES
-           ("Admin"
-           ,"e3afed0047b08059d0fada10f400c1e5"
+           ('Admin'
+           ,'e3afed0047b08059d0fada10f400c1e5'
            ,0
            ,0
-           ,"A completar"
+           ,0)
 GO
-

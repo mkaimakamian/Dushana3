@@ -6,6 +6,7 @@
         MAX_ATTEMPTS
         INCOMPLETE_FIELDS
         EXCEPTION
+        CORRUPTED_DATABASE
     End Enum
 
     Private _type As type

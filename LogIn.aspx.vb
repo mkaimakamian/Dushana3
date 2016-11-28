@@ -4,6 +4,7 @@ Partial Class LogIn
     Inherits System.Web.UI.Page
 
     Protected Sub BtnAccess_Click(sender As Object, e As EventArgs) Handles BtnAccess.Click
+
         Dim loginBll As New LogInBLL()
         Dim result As ResultDTO
         result = loginBll.LogIn(TxtUser.Text, TxtPassword.Text)

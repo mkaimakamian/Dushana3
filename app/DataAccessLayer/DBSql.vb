@@ -1,7 +1,8 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Data
+Imports System.Data.SqlClient
 
 Public Class DBSql
-    Private connStr = "Data Source=.\UAI_EXPRESS; Initial Catalog=LPPA; Integrated Security=True"
+    Private connStr = "Data Source=DESKTOP-89RB8TN\SQLEXPRESS;Initial Catalog=LPPA;Integrated Security=True"
 
 
     Public Function ExecuteNonQuery(ByRef sql As String)
@@ -34,6 +35,17 @@ Public Class DBSql
 
         connection.Close()
         Return result
+    End Function
+
+    Public Function Fill(ByRef sql As String) As DataSet
+        Dim connection As New SqlConnection(connStr)
+        Dim command As New SqlCommand(sql, connection)
+        Dim adapter As New SqlDataAdapter(command)
+        Dim dataset As New DataSet
+        adapter.Fill(dataset)
+
+        Return dataset
+
     End Function
 
     ' Devuelve una lista de cadenas de texto respetando el orden de  los campos
