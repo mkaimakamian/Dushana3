@@ -4,5 +4,9 @@
 </asp:Content>
 <asp:Content ID="MainBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>Restauracion</h1>
+    <p>
+        <asp:Button ID="btnRestore" runat="server" Text="Restore" />
+    </p>
+    <p>&nbsp;</p>
 </asp:Content>
 

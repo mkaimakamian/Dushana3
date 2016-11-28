@@ -4,5 +4,8 @@
 </asp:Content>
 <asp:Content ID="MainBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>Copia de Seguridad</h1>
+    <p>
+        <asp:Button ID="btnBackup" runat="server" Text="Backup" />
+    </p>
 </asp:Content>
 

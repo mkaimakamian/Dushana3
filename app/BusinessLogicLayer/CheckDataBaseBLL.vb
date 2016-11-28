@@ -28,6 +28,6 @@ Public Class CheckDataBaseBLL
         End Try
     End Function
 
-    'TODO: iterar el DS que recibo desde la DAL y comprar aentre si los campos de NuevoDH y DHCalculado
+
 
 End Class

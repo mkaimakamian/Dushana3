@@ -23,7 +23,7 @@ Public Class CheckDBDAL
         Dim dbsql As New DBSql
         Dim sql As String
         Dim reader As List(Of List(Of String))
-        sql = "SELECT SELECT CHECKSUM_AGG(hdigit) FROM users"
+        sql = "SELECT CHECKSUM_AGG(hdigit) FROM users"
         reader = dbsql.ExecuteReader(sql)
 
         If reader.Count > 0 Then
@@ -31,23 +31,6 @@ Public Class CheckDBDAL
         Else
             Return Nothing
         End If
-
-    End Function
-    'Obtengo el DVH guardado en la Base
-    Public Function checkDVH() As dvhDTO
-        Dim dbsql As New DBSql
-        Dim sql As String
-        Dim dataSet As DataSet
-        sql = "select name, BINARY_CHECKSUM(name, password), hdigit from users"
-
-        dataSet = dbsql.Fill(sql)
-
-
-        'TODO Necesito devolver un DS
-        If dataSet.Tables(0).Rows.Count Then
-            'Devuelvo un DS
-        End If
-
 
     End Function
 
