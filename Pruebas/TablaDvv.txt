@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[dvv](
+	[vdigit] [int] NOT NULL
+) ON [PRIMARY]
+
+--Recordar que hay que volver a calcular el DVV una vez que se implementa.
+--SELECT CHECKSUM_AGG(hdigit) FROM users

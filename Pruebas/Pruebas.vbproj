@@ -139,6 +139,7 @@
     <Content Include="BaseDeDatos.txt" />
     <Content Include="TablaLog.txt" />
     <Content Include="TablaUsers.txt" />
+    <Content Include="TablaDvv.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
