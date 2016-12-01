@@ -3,6 +3,7 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports BusinessLogicLayer
 Imports DataAccessLayer
 Imports DataTypeObject
+Imports Helper
 
 <TestClass()> Public Class LoginTest
 
@@ -73,4 +74,14 @@ Imports DataTypeObject
         result = login.LogIn("Admin", "Admin")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.OK))
     End Sub
+
+    <TestMethod()> Public Sub TestHashing()
+
+        Dim securityHelper As New SecurityHelper()
+        Dim p1 As String = securityHelper.Encrypt("Admin")
+        Dim p2 As String = securityHelper.Encrypt("Usuario")
+        Dim p3 As String = securityHelper.Encrypt("Ssabato")
+
+    End Sub
+
 End Class

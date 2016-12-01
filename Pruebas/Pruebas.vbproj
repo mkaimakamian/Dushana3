@@ -134,6 +134,10 @@
       <Project>{11777f6d-1405-40e2-b717-4882ae252c84}</Project>
       <Name>DataTypeObject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\app\Helper\Helper.vbproj">
+      <Project>{da618598-aa08-4bc5-97e5-e61a04d53afe}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaseDeDatos.txt" />
