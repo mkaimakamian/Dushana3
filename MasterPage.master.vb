@@ -10,12 +10,13 @@ Partial Class MasterPage
             logBll.AddLogCritical("Acceso", "Posible ataque - acceso sin user en sesión.", Me)
             MsgBox("Acceso ilegal.", vbOKOnly, "Acceso prohibido")
             Response.Redirect("LogIn.aspx")
-        End If
 
-        If Session("restoreOnly") And HttpContext.Current.Request.Url.AbsolutePath <> "/Restore.aspx" And HttpContext.Current.Request.Url.AbsolutePath <> "/ViewerLog.aspx" Then
-            Response.Redirect("Restore.aspx")
-        End If
+        Else
+            If Session("restoreOnly") And HttpContext.Current.Request.Url.AbsolutePath <> "/Restore.aspx" And HttpContext.Current.Request.Url.AbsolutePath <> "/ViewerLog.aspx" Then
+                Response.Redirect("Restore.aspx")
+            End If
 
+        End If
     End Sub
 
 End Class
