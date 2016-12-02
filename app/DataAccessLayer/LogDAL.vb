@@ -25,7 +25,7 @@ Public Class LogDAL
             entityCriterion = " AND entity = '" + entity + "'"
         End If
 
-        sql = "SELECT * FROM logs WHERE loglevel >= " + level + entityCriterion + dateCriterion
+        sql = "SELECT * FROM logs WHERE loglevel >= " + level + entityCriterion + dateCriterion + " ORDER BY 1 DESC"
         reader = dbsql.ExecuteReader(sql)
 
         If reader.Count > 0 Then

@@ -21,6 +21,8 @@ Partial Class MasterPage
     End Sub
 
     Protected Sub LinkButton1_Click(sender As Object, e As EventArgs) Handles LinkButton1.Click
+        Dim logBll As New LogBLL()
+        logBll.AddLogInfo("Log out", "El usuario " + Session("user").name + " abandonó la sesión.", Me)
         Session.Clear()
         Response.Redirect("Login.aspx")
     End Sub
