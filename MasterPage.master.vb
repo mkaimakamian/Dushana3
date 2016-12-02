@@ -12,6 +12,10 @@ Partial Class MasterPage
             Response.Redirect("LogIn.aspx")
         End If
 
+        If Session("restoreOnly") And HttpContext.Current.Request.Url.AbsolutePath <> "/Restore.aspx" And HttpContext.Current.Request.Url.AbsolutePath <> "/ViewerLog.aspx" Then
+            Response.Redirect("Restore.aspx")
+        End If
+
     End Sub
 
 End Class

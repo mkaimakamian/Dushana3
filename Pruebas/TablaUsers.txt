@@ -1,7 +1,7 @@
 ﻿USE [LPPA]
 GO
 
-/****** Object:  Table [dbo].[users]    Script Date: 27/11/2016 11:20:51 ******/
+/****** Object:  Table [dbo].[users]    Script Date: 01/12/2016 21:56:59 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,13 +11,13 @@ GO
 SET ANSI_PADDING ON
 GO
 
--- Seba: Se modifica a hdigit (Este es el horizontal :P) y este se modifica a INT
 CREATE TABLE [dbo].[users](
 	[name] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
 	[locked] [bit] NOT NULL,
 	[retries] [int] NOT NULL,
 	[hdigit] [int] NOT NULL,
+	[type] [int] NOT NULL,
  CONSTRAINT [PK_users] PRIMARY KEY CLUSTERED 
 (
 	[name] ASC
@@ -30,23 +30,6 @@ SET ANSI_PADDING OFF
 GO
 
 
-
-
-
-USE [LPPA]
-GO
-
--- Seba: Se modifica a Comillas Simples
-INSERT INTO [dbo].[users]
-           ([name]
-           ,[password]
-           ,[locked]
-           ,[retries]
-           ,[hdigit]) -- Seba: Se modifica a hdigit (Este es el horizontal :P)
-     VALUES
-           ('Admin'
-           ,'e3afed0047b08059d0fada10f400c1e5'
-           ,0
-           ,0
-           ,0)
-GO
+-- admin	e3afed0047b08059d0fada10f400c1e5	0	0	838987666	1
+-- ssabato	6bffd3fdaa3e5ffcf66ed52f302a4eb0	0	0	1446455908	2
+-- usuario	a5ae0861febff1aeefb6d5b759d904a6	0	0	-1230623114	3

@@ -5,24 +5,32 @@ Partial Class LogIn
 
     Protected Sub BtnAccess_Click(sender As Object, e As EventArgs) Handles BtnAccess.Click
 
+        Dim LogInBLL As New LogInBLL()
+        Dim result As ResultDTO
         Dim CheckDataBaseBLL As New CheckDataBaseBLL
         Dim dvResultDTO As ResultDTO
-        dvResultDTO = CheckDataBaseBLL.CheckDVV
 
-        If dvResultDTO.IsCurrentError(ResultDTO.type.CORRUPTED_DATABASE) Then
-            Response.Redirect("Restore.aspx")
-        Else
-            Dim LogInBLL As New LogInBLL()
-            Dim result As ResultDTO
-            result = LogInBLL.LogIn(TxtUser.Text, TxtPassword.Text)
+        result = LogInBLL.LogIn(TxtUser.Text, TxtPassword.Text)
 
-            If result.IsValid() Then
-                Session("user") = result.value
-                Response.Redirect("Home.aspx")
+        If result.IsValid() Then
+            Session("user") = result.value
+            dvResultDTO = CheckDataBaseBLL.CheckDVV
+
+            If dvResultDTO.IsCurrentError(ResultDTO.type.CORRUPTED_DATABASE) Then
+                If result.value.type = 1 Then
+                    Session("restoreOnly") = True
+                    Response.Redirect("Restore.aspx")
+                Else
+                    MsgBox(dvResultDTO.description, vbOKOnly, "Error")
+                End If
             Else
-                MsgBox(result.description, vbOKOnly, "Error")
+                Response.Redirect("Home.aspx")
             End If
+
+        Else
+            MsgBox(result.description, vbOKOnly, "Error")
         End If
+
     End Sub
 
 End Class

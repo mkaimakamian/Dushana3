@@ -6,6 +6,7 @@
     Private _locked As Boolean
     Private _retries As Integer
     Private _verified As Boolean
+    Private _type As String
 
     Property name As String
         Get
@@ -40,6 +41,15 @@
         End Get
         Set(value As Boolean)
             _verified = value
+        End Set
+    End Property
+
+    Property type As String
+        Get
+            Return _type
+        End Get
+        Set(value As String)
+            _type = value
         End Set
     End Property
 End Class
