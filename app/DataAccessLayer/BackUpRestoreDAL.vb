@@ -14,7 +14,7 @@
         Dim sql As String
         Dim result As Object
 
-        sql = "USE MASTER RESTORE DATABASE LPPA FROM DISK = 'C:\LPPA\Dushana\Backup\LPPA.BAK' WITH REPLACE"
+        sql = "USE MASTER ALTER DATABASE Lppa SET SINGLE_USER WITH ROLLBACK IMMEDIATE RESTORE DATABASE LPPA FROM DISK = 'C:\LPPA\Dushana\Backup\LPPA.BAK' WITH REPLACE"
         Return result = dbsql.ExecuteNonQuery(sql)
     End Function
 

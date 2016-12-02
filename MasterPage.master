@@ -21,6 +21,9 @@
 				</h1>
 			</div>
 			<div class="loginDisplay">
+			    <asp:LinkButton ID="LinkButton1" runat="server">Logout </asp:LinkButton>
+
+                <asp:Label ID="txtUsuario" runat="server" Text="****"></asp:Label>
 			</div>
 			<div class="clear hideSkiplink">
 				<asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"

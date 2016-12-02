@@ -12,6 +12,7 @@ Partial Class MasterPage
             Response.Redirect("LogIn.aspx")
 
         Else
+            txtUsuario.Text = Session("user").name
             If Session("restoreOnly") And HttpContext.Current.Request.Url.AbsolutePath <> "/Restore.aspx" And HttpContext.Current.Request.Url.AbsolutePath <> "/ViewerLog.aspx" Then
                 Response.Redirect("Restore.aspx")
             End If
@@ -19,5 +20,9 @@ Partial Class MasterPage
         End If
     End Sub
 
+    Protected Sub LinkButton1_Click(sender As Object, e As EventArgs) Handles LinkButton1.Click
+        Session.Clear()
+        Response.Redirect("Login.aspx")
+    End Sub
 End Class
 

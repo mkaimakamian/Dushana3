@@ -22,7 +22,7 @@ Public Class BackupRestoreBLL
         Dim BackUpRestoreDAL As New BackUpRestoreDAL
         Dim result As Object
 
-        result = BackUpRestoreDAL.doBackup()
+        result = BackUpRestoreDAL.doRestore()
 
         If result = True Then
             LogBLL.AddLogInfo("Restore", "Se realizo Restore de la DB", Me)
