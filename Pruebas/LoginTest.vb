@@ -11,7 +11,7 @@ Imports Helper
     <TestInitialize()> Public Sub Inicializar()
         Dim dal As New LogInDAL()
         Dim login As New LogInDTO()
-        login.user = "Admin"
+        login.user = "admin"
         dal.UnlockUser(login)
     End Sub
 
@@ -21,12 +21,12 @@ Imports Helper
         ' Prueba que se logue el usuario admin
         Dim login As New LogInBLL
         Dim result As ResultDTO
-        result = login.LogIn("Admin", "Admin")
+        result = login.LogIn("admin", "Admin")
 
         ' Asserts de algunas cosas como para tener una idea somera del funcionamiento
         Assert.AreEqual("Ok", result.description)
         Assert.IsTrue(result.IsValid())
-        Assert.AreEqual(CType(result.value, UserDTO).name, "Admin")
+        Assert.AreEqual(CType(result.value, UserDTO).name, "admin")
         Assert.AreEqual(CType(result.value, UserDTO).retries, 0)
     End Sub
 
@@ -48,14 +48,14 @@ Imports Helper
         ' Prueba el locked
         Dim login As New LogInBLL
         Dim result As ResultDTO
-        login.LogIn("Admin", "xxxx")
+        login.LogIn("admin", "xxxx")
 
         ' Usuario debería poder continuar reintentando
-        result = login.LogIn("Admin", "xxxx")
+        result = login.LogIn("admin", "xxxx")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.INVALID_CREDENTIAL))
 
         ' Usuario Lockeado
-        result = login.LogIn("Admin", "xxxx")
+        result = login.LogIn("admin", "xxxx")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.MAX_ATTEMPTS))
     End Sub
 
@@ -64,14 +64,14 @@ Imports Helper
         ' Prueba el locked
         Dim login As New LogInBLL
         Dim result As ResultDTO
-        login.LogIn("Admin", "xxxx")
+        login.LogIn("admin", "xxxx")
 
         ' Usuario debería poder continuar reintentando
-        result = login.LogIn("Admin", "xxxx")
+        result = login.LogIn("admin", "xxxx")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.INVALID_CREDENTIAL))
 
         ' Usuario Lockeado
-        result = login.LogIn("Admin", "Admin")
+        result = login.LogIn("admin", "Admin")
         Assert.IsTrue(result.IsCurrentError(ResultDTO.type.OK))
     End Sub
 

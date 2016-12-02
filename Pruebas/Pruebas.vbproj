@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="LogTest.vb" />
     <Compile Include="CustomerTest.vb" />
+    <Compile Include="DVVTest.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

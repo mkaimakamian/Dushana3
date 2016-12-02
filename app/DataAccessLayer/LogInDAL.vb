@@ -8,7 +8,7 @@ Public Class LogInDAL
         Dim sql As String
         Dim reader As List(Of List(Of String))
 
-        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password) then 1 ELSE 0 END verified FROM users "
+        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password, type) then 1 ELSE 0 END verified FROM users "
         sql += "WHERE name = '" + userLogin.user + "' AND password = '" + userLogin.password + "'"
 
         reader = dbsql.ExecuteReader(sql)
@@ -26,7 +26,7 @@ Public Class LogInDAL
         Dim sql As String
         Dim reader As List(Of List(Of String))
 
-        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password) then 1 ELSE 0 END verified FROM users "
+        sql = "SELECT name, locked, retries, CASE WHEN hdigit =  BINARY_CHECKSUM(name, password, type) then 1 ELSE 0 END verified FROM users "
         sql += "WHERE name = '" + userLogin.user + "'"
         reader = dbsql.ExecuteReader(sql)
 

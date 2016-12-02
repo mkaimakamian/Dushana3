@@ -23,7 +23,7 @@ Public Class CheckDBDAL
         Dim dbsql As New DBSql
         Dim sql As String
         Dim reader As List(Of List(Of String))
-        sql = "SELECT CHECKSUM_AGG(hdigit) FROM users"
+        sql = "SELECT CHECKSUM_AGG(v.lala) FROM  (SELECT BINARY_CHECKSUM(name, password, type) lala FROM users) v"
         reader = dbsql.ExecuteReader(sql)
 
         If reader.Count > 0 Then
