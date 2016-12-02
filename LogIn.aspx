@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="Estilo/MyStyle.css" rel="stylesheet" />
     <title></title>
 </head>
 <body>
