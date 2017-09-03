@@ -2,8 +2,8 @@
 Imports System.Data.SqlClient
 
 Public Class DBSql
-    Private connStr = "Data Source=DESKTOP-89RB8TN\SQLEXPRESS;Initial Catalog=LPPA;Integrated Security=True"
-    'Private connStr = "Data Source=.\UAI_EXPRESS; Initial Catalog=LPPA; Integrated Security=True"
+    ' Private connStr = "Data Source=DESKTOP-89RB8TN\SQLEXPRESS;Initial Catalog=LPPA;Integrated Security=True"
+    Private connStr = "Data Source=.\UAI_EXPRESS; Initial Catalog=LPPA; Integrated Security=True"
 
     Public Function ExecuteNonQuery(ByRef sql As String)
         Dim connection As New SqlConnection(connStr)

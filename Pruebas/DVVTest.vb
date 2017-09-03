@@ -19,4 +19,13 @@ Imports DataTypeObject
         Assert.AreEqual(OriginDVV.dvv, CalculatedDVV.dvv, "Deberían ser iguales")
     End Sub
 
+    <TestMethod()> Public Sub TestDVVADetailed()
+
+        Dim DVVBusiness As New CheckDataBaseBLL()
+        Dim checkResul As ResultDTO = DVVBusiness.CheckDVVDetailed()
+
+        Assert.IsTrue(checkResul.IsValid(), "Debería ser válido")
+
+    End Sub
+
 End Class

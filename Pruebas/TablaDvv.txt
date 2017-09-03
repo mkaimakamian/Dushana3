@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[dvv](
-	[vdigit] [int] NOT NULL
+	[vdigit] [int] NOT NULL,
+	[entity] [varchar](50) NOT NULL
 ) ON [PRIMARY]
 
 --Recordar que hay que volver a calcular el DVV una vez que se implementa.
---SELECT CHECKSUM_AGG(hdigit) FROM users
+--SELECT CHECKSUM_AGG(v.lala)  FROM  (SELECT BINARY_CHECKSUM(name, password, type, hdigit) lala FROM users) v

@@ -14,7 +14,7 @@ Partial Class LogIn
 
         If result.IsValid() Then
             Session("user") = result.value
-            dvResultDTO = CheckDataBaseBLL.CheckDVV
+            dvResultDTO = CheckDataBaseBLL.CheckDVVDetailed
 
             If dvResultDTO.IsCurrentError(ResultDTO.type.CORRUPTED_DATABASE) Then
                 If result.value.type = 1 Then
