@@ -1,5 +1,43 @@
-﻿
+﻿Imports System.Xml
+
 Partial Class MyOrders
     Inherits System.Web.UI.Page
+
+    'Session("user").name
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        If Not IsPostBack Then
+            Dim miDoc As New XmlDocument()
+            Dim miLector As New XmlTextReader(Server.MapPath("ventas.xml"))
+            miLector.WhitespaceHandling = WhitespaceHandling.None
+            miDoc.Load(miLector)
+            'Session.Add("DocumentoEnSesion", miDoc)
+
+            Dim n As Integer
+            For n = 0 To miDoc.DocumentElement.ChildNodes.Count - 1
+                dropFechas.Items.Add(miDoc.DocumentElement.ChildNodes(n).Attributes(0).Value)
+                'dropFechas.Items.Add(miDoc.DocumentElement.ChildNodes(n).ChildNodes(1).InnerText)
+            Next
+            miLector.Close()
+
+        End If
+
+
+
+        'Dim lector As New XmlTextReader(Server.MapPath("ventas.xml"))
+        'Dim n As Integer
+
+        'While lector.Read()
+        '    Response.Write(lector.NodeType.ToString() + ": " + lector.Name + ":" + lector.Value + "<br/>")
+        '    If lector.HasAttributes Then
+        '        For n = 0 To lector.AttributeCount - 1
+        '            lector.MoveToAttribute(n)
+        '            Response.Write("<b>" + lector.NodeType.ToString() + ": " + lector.Name + ":" + lector.Value + "<br/><br/>")
+        '        Next
+        '        lector.MoveToElement()
+        '    End If
+        'End While
+        'lector.Close()
+    End Sub
 
 End Class
