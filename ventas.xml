@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dushana>
+  <venta fecha="8/11/2017">
+    <cliente id="1" nombre="Admin">
+      <servicios>
+        <producto>
+          <id>1</id>
+          <nombre>Peeling</nombre>
+          <descripcion>El peeling consigue una disminución de las arrugas, una piel rejuvenecida y bien hidratada, con una secreción correcta de grasa y una buena consistencia y luminosidad.</descripcion>
+          <precio>300</precio>
+        </producto>
+        <producto>
+          <id>3</id>
+          <nombre>Masajes descontracturantes</nombre>
+          <descripcion>Masajes</descripcion>
+          <precio>400</precio>
+        </producto>
+      </servicios>
+      <facturacion>
+        <totalLista>700</totalLista>
+        <bonificacion>10%</bonificacion>
+        <totalFinal>630</totalFinal>
+      </facturacion>
+    </cliente>
+
+    <cliente id="2" nombre="Usuario 2">
+      <servicios>
+        <producto>
+          <id>5</id>
+          <nombre>Cavitación</nombre>
+          <descripcion>	Tratamiento médico de estética que consiste en aplicar ultrasonidos en determinadas zonas del cuerpo para eliminar la grasa en ellas localizadas.</descripcion>
+          <precio>425</precio>
+        </producto>        
+      </servicios>
+      <facturacion>
+        <totalLista>425</totalLista>
+        <bonificacion>0%</bonificacion>
+        <totalFinal>425</totalFinal>
+      </facturacion>
+    </cliente>
+  </venta>  
+</dushana>
