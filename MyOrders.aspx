@@ -5,7 +5,7 @@
 <asp:Content ID="MainBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>Mis Compras</h1>
     <p>Fecha:
-        <asp:DropDownList ID="dropFechas" runat="server">
+        <asp:DropDownList ID="dropFechas" runat="server" AutoPostBack="True">
         </asp:DropDownList>
     </p>
 </asp:Content>
