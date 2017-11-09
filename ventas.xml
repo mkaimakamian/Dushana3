@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dushana>
   <venta fecha="7/11/2017">
-    <cliente nombre="Usuario 2">
+    <cliente nombre="admin">
       <servicios>
         <producto>
           <id>5</id>
@@ -17,9 +17,8 @@
       </facturacion>
     </cliente>
   </venta>
-  
   <venta fecha="8/11/2017">
-    <cliente nombre="Admin">
+    <cliente nombre="admin">
       <servicios>
         <producto>
           <id>1</id>
@@ -40,8 +39,7 @@
         <totalFinal>630</totalFinal>
       </facturacion>
     </cliente>
-
-    <cliente nombre="Usuario 2">
+    <cliente nombre="Otro usuario">
       <servicios>
         <producto>
           <id>5</id>
