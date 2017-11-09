@@ -8,5 +8,6 @@
         <asp:DropDownList ID="dropFechas" runat="server" AutoPostBack="True">
         </asp:DropDownList>
     </p>
+    <p><%=sellTable%></p>
 </asp:Content>
 

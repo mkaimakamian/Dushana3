@@ -3,6 +3,8 @@ Imports System.Xml.XPath
 
 Partial Class MyOrders
     Inherits System.Web.UI.Page
+    Public sellTable As String
+
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -34,16 +36,22 @@ Partial Class MyOrders
         Dim nav As XPathNavigator = miDoc.CreateNavigator()
 
         Dim servicesNav As XPathNavigator = nav.SelectSingleNode("dushana/venta[@fecha='" + selectedDate + "']/cliente[@nombre='" + Session("user").name + "']")
+
+        sellTable += "Fecha seleccionada: " + selectedDate + "</p>"
+        sellTable += "<b>Productos</b> </p>"
         For Each productNav As XPathNavigator In servicesNav.Select("servicios/producto")
-            Response.Write(productNav.SelectSingleNode("id").Value + "</br>")
-            Response.Write(productNav.SelectSingleNode("nombre").Value + "</br>")
-            Response.Write(productNav.SelectSingleNode("descripcion").Value + "</br>")
-            Response.Write(productNav.SelectSingleNode("precio").Value + "</p></p>")
+            sellTable += "Código:" + productNav.SelectSingleNode("id").Value + "</br>"
+            sellTable += "Tratamiento:" + productNav.SelectSingleNode("nombre").Value + "</br>"
+            sellTable += "Descripción:" + productNav.SelectSingleNode("descripcion").Value + "</br>"
+            sellTable += "Precio:" + productNav.SelectSingleNode("precio").Value + "</br>"
         Next
 
-        Response.Write(servicesNav.SelectSingleNode("facturacion/totalLista").Value + "</br>")
-        Response.Write(servicesNav.SelectSingleNode("facturacion/bonificacion").Value + "</br>")
-        Response.Write(servicesNav.SelectSingleNode("facturacion/totalFinal").Value + "</br>")
+        sellTable += servicesNav.SelectSingleNode("facturacion/totalLista").Value + "</br>"
+        sellTable += servicesNav.SelectSingleNode("facturacion/bonificacion").Value + "</br>"
+        sellTable += servicesNav.SelectSingleNode("facturacion/totalFinal").Value + "</br>"
 
     End Sub
+
+
+
 End Class
