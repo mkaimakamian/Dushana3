@@ -22,8 +22,6 @@ Partial Class MyOrders
             PrintSells(dropFechas.SelectedValue)
         End If
 
-
-
     End Sub
 
     Protected Sub dropFechas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dropFechas.SelectedIndexChanged
@@ -34,10 +32,18 @@ Partial Class MyOrders
 
         Dim miDoc As XPathDocument = Session("Ventas")
         Dim nav As XPathNavigator = miDoc.CreateNavigator()
-        Dim ite As XPathNodeIterator = nav.Select("dushana/venta[@fecha='" + selectedDate + "']")
 
-        While ite.MoveNext
-            Response.Write(ite.Current.Value)
-        End While
+        Dim servicesNav As XPathNavigator = nav.SelectSingleNode("dushana/venta[@fecha='" + selectedDate + "']/cliente[@nombre='" + Session("user").name + "']")
+        For Each productNav As XPathNavigator In servicesNav.Select("servicios/producto")
+            Response.Write(productNav.SelectSingleNode("id").Value + "</br>")
+            Response.Write(productNav.SelectSingleNode("nombre").Value + "</br>")
+            Response.Write(productNav.SelectSingleNode("descripcion").Value + "</br>")
+            Response.Write(productNav.SelectSingleNode("precio").Value + "</p></p>")
+        Next
+
+        Response.Write(servicesNav.SelectSingleNode("facturacion/totalLista").Value + "</br>")
+        Response.Write(servicesNav.SelectSingleNode("facturacion/bonificacion").Value + "</br>")
+        Response.Write(servicesNav.SelectSingleNode("facturacion/totalFinal").Value + "</br>")
+
     End Sub
 End Class

@@ -17,7 +17,6 @@
       </facturacion>
     </cliente>
   </venta>
-  
   <venta fecha="8/11/2017">
     <cliente nombre="admin">
       <servicios>
@@ -40,8 +39,7 @@
         <totalFinal>630</totalFinal>
       </facturacion>
     </cliente>
-
-    <cliente nombre="admin">
+    <cliente nombre="Otro usuario">
       <servicios>
         <producto>
           <id>5</id>
