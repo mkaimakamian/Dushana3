@@ -36,4 +36,7 @@ Partial Class LogIn
     Private Sub form1_Load(sender As Object, e As EventArgs) Handles form1.Load
         Session.Clear()
     End Sub
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+    End Sub
 End Class
