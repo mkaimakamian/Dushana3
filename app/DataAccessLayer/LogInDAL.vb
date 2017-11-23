@@ -1,4 +1,6 @@
 ﻿Imports DataTypeObject
+Imports DataAccessLayer
+Imports System.Data.SqlClient
 
 Public Class LogInDAL
 

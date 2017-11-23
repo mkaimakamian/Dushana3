@@ -2,27 +2,42 @@
 Imports DataTypeObject
 Partial Class Orders
     Inherits System.Web.UI.Page
+    Dim productList As New List(Of ProductDTO)
+    Dim Carrito As New List(Of ProductDTO)
 
-    Private Sub Orders_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Public Sub getProductList()
         Dim productBll As New ProductBLL()
-        Dim productList As New List(Of ProductDTO)
+
         Dim result As ResultDTO
         result = productBll.GetProducts()
 
         For Each Product As ProductDTO In result.value
             productList.Add(Product)
         Next
-
-        ListBox1.DataTextField = "name"
-        ListBox1.DataSource = productList
-        ListBox1.DataBind()
     End Sub
 
+    Private Sub Orders_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-    'TODO: No me toma el selected Item
+        If Not IsPostBack Then
+            getProductList()
+
+            ListBox1.DataTextField = "name"
+            ListBox1.DataSource = productList
+            ListBox1.DataBind()
+        End If
+    End Sub
+
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        getProductList()
+
+        For Each producto As ProductDTO In productList
+            If producto.name = ListBox1.SelectedItem.Value Then
+                Carrito.Add(producto)
+                ListBox2.Items.Add(producto.name)
+            End If
+        Next
+
         ListBox2.DataTextField = "name"
-        ListBox2.Items.Add(ListBox1.SelectedItem)
     End Sub
 
 
@@ -30,9 +45,8 @@ Partial Class Orders
         Dim Billing As New BillingDTO
         Dim MiWebService As New WebService
 
-        For Each Product As ProductDTO In ListBox2.Items
-            Billing.products.Add(Product)
-        Next
+        getProductList()
+        Billing.products = productList
 
         For Each Product As ProductDTO In Billing.products
             Billing.listTotal = Billing.listTotal + Product.prices
@@ -45,4 +59,6 @@ Partial Class Orders
         End If
         'PENDING: Aca hay que hacer la llamada al TextWriter
     End Sub
+
+
 End Class

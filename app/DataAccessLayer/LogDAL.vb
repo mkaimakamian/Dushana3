@@ -1,4 +1,5 @@
 ﻿Imports DataTypeObject
+Imports DataAccessLayer
 Public Class LogDAL
 
     ' Busca los logs que se corresponden con los criterios
