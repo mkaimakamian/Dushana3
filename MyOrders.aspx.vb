@@ -39,19 +39,26 @@ Partial Class MyOrders
 
         sellTable += "Fecha seleccionada: " + selectedDate + "</p>"
         sellTable += "<b>Productos</b> </p>"
-        For Each productNav As XPathNavigator In servicesNav.Select("servicios/producto")
-            sellTable += "Código:" + productNav.SelectSingleNode("id").Value + "</br>"
-            sellTable += "Tratamiento:" + productNav.SelectSingleNode("nombre").Value + "</br>"
-            sellTable += "Descripción:" + productNav.SelectSingleNode("descripcion").Value + "</br>"
-            sellTable += "Precio:" + productNav.SelectSingleNode("precio").Value + "</br>"
-        Next
 
-        sellTable += servicesNav.SelectSingleNode("facturacion/totalLista").Value + "</br>"
-        sellTable += servicesNav.SelectSingleNode("facturacion/bonificacion").Value + "</br>"
-        sellTable += servicesNav.SelectSingleNode("facturacion/totalFinal").Value + "</br>"
+        If IsNothing(servicesNav) Then
+            sellTable = "No se han efectuado compras en el día de la fecha."
+            Return
+        End If
+
+        For Each productNav As XPathNavigator In servicesNav.Select("servicios/producto")
+            sellTable += "<b>Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>&nbsp;" + productNav.SelectSingleNode("id").Value + "</br>"
+            sellTable += "<b>Tratamiento:</b>&nbsp;" + productNav.SelectSingleNode("nombre").Value + "</br>"
+            sellTable += "<b>Descripción&nbsp;:</b>&nbsp;" + productNav.SelectSingleNode("descripcion").Value + "</br>"
+            sellTable += "<b>Precio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>&nbsp;" + productNav.SelectSingleNode("precio").Value + "</br>"
+            sellTable += "</p></p>"
+        Next
+        sellTable += "</p></p>"
+        sellTable += "--------------------"
+        sellTable += "</p></p>"
+        sellTable += "Total parcial:&nbsp;" + servicesNav.SelectSingleNode("facturacion/totalLista").Value + "</br>"
+        sellTable += "Bonificación:&nbsp;&nbsp;" + servicesNav.SelectSingleNode("facturacion/bonificacion").Value + "</br>"
+        sellTable += "Total final:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + servicesNav.SelectSingleNode("facturacion/totalFinal").Value + "</br>"
+
 
     End Sub
-
-
-
 End Class
