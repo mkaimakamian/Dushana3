@@ -55,8 +55,8 @@ Partial Class Orders
         fecha.AppendChild(fechaTexto)
 
         Dim cliente As XmlElement = doc.CreateElement("clienteNombre")
-        Dim clienteTexto As XmlText = doc.CreateTextNode(Session("User"))
-        fecha.AppendChild(fechaTexto)
+        Dim clienteTexto As XmlText = doc.CreateTextNode(Session("User").name)
+        cliente.AppendChild(clienteTexto)
 
         Dim ServiciosNode As XmlNode = doc.CreateNode(XmlNodeType.Element, "Servicios", "")
         For Each P As ProductDTO In Billing.products
@@ -64,22 +64,22 @@ Partial Class Orders
 
             Dim id As XmlElement = doc.CreateElement("id")
             Dim idTexto As XmlText = doc.CreateTextNode(P.id)
-            fecha.AppendChild(idTexto)
+            id.AppendChild(idTexto)
 
 
             Dim nombre As XmlElement = doc.CreateElement("nombre")
             Dim nombreTexto As XmlText = doc.CreateTextNode(P.name)
-            fecha.AppendChild(nombreTexto)
+            nombre.AppendChild(nombreTexto)
 
 
             Dim descripcion As XmlElement = doc.CreateElement("descripcion")
             Dim descripcionTexto As XmlText = doc.CreateTextNode(P.description)
-            fecha.AppendChild(descripcionTexto)
+            descripcion.AppendChild(descripcionTexto)
 
 
             Dim precio As XmlElement = doc.CreateElement("precio")
             Dim precioTexto As XmlText = doc.CreateTextNode(P.prices)
-            fecha.AppendChild(precioTexto)
+            precio.AppendChild(precioTexto)
 
             doc.Item("ventas.xml").AppendChild(ProductoNode)
 
@@ -90,15 +90,15 @@ Partial Class Orders
 
         Dim totalLista As XmlElement = doc.CreateElement("totaLista")
         Dim totalListaTexto As XmlText = doc.CreateTextNode(Billing.listTotal)
-        fecha.AppendChild(totalListaTexto)
+        totalLista.AppendChild(totalListaTexto)
 
         Dim Bonificacion As XmlElement = doc.CreateElement("bonificacion")
         Dim BonificacionTexto As XmlText = doc.CreateTextNode(Billing.discount)
-        fecha.AppendChild(BonificacionTexto)
+        Bonificacion.AppendChild(BonificacionTexto)
 
         Dim totalFinal As XmlElement = doc.CreateElement("totaFinal")
         Dim totalFinalTexto As XmlText = doc.CreateTextNode(Billing.finalPrice)
-        fecha.AppendChild(totalFinalTexto)
+        totalFinal.AppendChild(totalFinalTexto)
 
         doc.Item("ventas.xml").AppendChild(FacturacionNode)
 
