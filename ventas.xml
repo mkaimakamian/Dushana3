@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <dushana>
   <venta fecha="7/11/2017">
     <cliente nombre="adminx">
@@ -46,7 +46,7 @@
           <nombre>Cavitación</nombre>
           <descripcion>	Tratamiento médico de estética que consiste en aplicar ultrasonidos en determinadas zonas del cuerpo para eliminar la grasa en ellas localizadas.</descripcion>
           <precio>425</precio>
-        </producto>        
+        </producto>
       </servicios>
       <facturacion>
         <totalLista>425</totalLista>
@@ -54,5 +54,5 @@
         <totalFinal>425</totalFinal>
       </facturacion>
     </cliente>
-  </venta>  
+  </venta>
 </dushana>

@@ -50,13 +50,15 @@ Partial Class Orders
 
         Dim VentaNode As XmlNode = doc.CreateNode(XmlNodeType.Element, "Venta", "")
 
-        Dim fecha As XmlElement = doc.CreateElement("fecha")
-        Dim fechaTexto As XmlText = doc.CreateTextNode(Date.Now)
-        fecha.AppendChild(fechaTexto)
+        Dim fecha As XmlAttribute = doc.CreateAttribute("fecha")
+        fecha.Value = Date.Now.ToString("dd/MM/yyyy")
+        VentaNode.Attributes.Append(fecha)
 
-        Dim cliente As XmlElement = doc.CreateElement("clienteNombre")
-        Dim clienteTexto As XmlText = doc.CreateTextNode(Session("User").name)
-        cliente.AppendChild(clienteTexto)
+        Dim cliente As XmlElement = doc.CreateElement("cliente")
+        Dim clienteNombre As XmlAttribute = doc.CreateAttribute("nombre")
+        clienteNombre.Value = Session("User").name
+        cliente.Attributes.Append(clienteNombre)
+
 
         Dim ServiciosNode As XmlNode = doc.CreateNode(XmlNodeType.Element, "Servicios", "")
         For Each P As ProductDTO In Billing.products
@@ -66,29 +68,28 @@ Partial Class Orders
             Dim idTexto As XmlText = doc.CreateTextNode(P.id)
             id.AppendChild(idTexto)
 
-
             Dim nombre As XmlElement = doc.CreateElement("nombre")
             Dim nombreTexto As XmlText = doc.CreateTextNode(P.name)
             nombre.AppendChild(nombreTexto)
-
 
             Dim descripcion As XmlElement = doc.CreateElement("descripcion")
             Dim descripcionTexto As XmlText = doc.CreateTextNode(P.description)
             descripcion.AppendChild(descripcionTexto)
 
-
             Dim precio As XmlElement = doc.CreateElement("precio")
             Dim precioTexto As XmlText = doc.CreateTextNode(P.prices)
             precio.AppendChild(precioTexto)
 
-            doc.Item("ventas.xml").AppendChild(ProductoNode)
+            ProductoNode.AppendChild(id)
+            ProductoNode.AppendChild(nombre)
+            ProductoNode.AppendChild(descripcion)
+            ProductoNode.AppendChild(precio)
 
+            ServiciosNode.AppendChild(ProductoNode)
         Next
-        doc.Item("ventas.xml").AppendChild(ServiciosNode)
-
         Dim FacturacionNode As XmlNode = doc.CreateNode(XmlNodeType.Element, "Facturacion", "")
 
-        Dim totalLista As XmlElement = doc.CreateElement("totaLista")
+        Dim totalLista As XmlElement = doc.CreateElement("totalLista")
         Dim totalListaTexto As XmlText = doc.CreateTextNode(Billing.listTotal)
         totalLista.AppendChild(totalListaTexto)
 
@@ -96,14 +97,21 @@ Partial Class Orders
         Dim BonificacionTexto As XmlText = doc.CreateTextNode(Billing.discount)
         Bonificacion.AppendChild(BonificacionTexto)
 
-        Dim totalFinal As XmlElement = doc.CreateElement("totaFinal")
+        Dim totalFinal As XmlElement = doc.CreateElement("totalFinal")
         Dim totalFinalTexto As XmlText = doc.CreateTextNode(Billing.finalPrice)
         totalFinal.AppendChild(totalFinalTexto)
 
-        doc.Item("ventas.xml").AppendChild(FacturacionNode)
+        FacturacionNode.AppendChild(totalLista)
+        FacturacionNode.AppendChild(Bonificacion)
+        FacturacionNode.AppendChild(totalFinal)
 
-        doc.Item("ventas.xml").AppendChild(VentaNode)
+        cliente.AppendChild(ServiciosNode)
+        cliente.AppendChild(FacturacionNode)
+        VentaNode.AppendChild(cliente)
 
+        doc.Item("dushana").AppendChild(VentaNode)
+        Reader.Close()
+        doc.Save(Server.MapPath("ventas.xml"))
     End Sub
 
 
